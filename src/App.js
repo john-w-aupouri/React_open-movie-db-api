@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import axios from 'axios'
+import Header from './components/Header'
+import SearchBar from './components/SearchBar'
+import Results from './components/Results'
+
 
 function App() {
+  const [state, setState] = useState({
+    search: "",
+    results: [],
+    selected: {}
+  })
+  const apiurl = "http://www.omdbapi.com/?apikey=79c5c98b"
+
+  const search = e => {
+    if (e.key === "Enter") {
+      axios(apiurl + "&s=" + state.search).then(({ data }) => {
+        let results = data.Search
+        
+        setState(prevState => {
+          return { ...prevState, results: results}
+        })
+      })
+    }  
+  }
+ 
+  const handleInput = e => {
+    let search = e.target.value
+ 
+    setState(prevState => {
+      return { ...prevState, search: search}
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <main>
+        <SearchBar handleInput={handleInput} search={search} />
+        <Results results={state.results} />
+      </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
