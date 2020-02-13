@@ -4,19 +4,23 @@ import { FaFilm } from 'react-icons/fa'
 
 export default function Header() {
   return (
-    <header>
-      <h1 className="FaFilm"><FaFilm /></h1>
-      <h1>Open Movie</h1>
-      <h1 style={{marginLeft: "12px"}}>
-        Database
+    <header>    
+      <h1 className="FaFilm">
+        <a href="http://www.omdbapi.com/">
+          <FaFilm />
+        </a>
+        <p style={{color: "rgb(97, 219, 251)", fontSize: "12px"}}>
+          www.omdbapi.com
+        </p>
       </h1> 
+      <h1>Open Movie Database</h1>
       <hr style={{marginLeft: "17px"}} />
       <a href="https://www.youtube.com/watch?v=ufodJVcpmps">
-        <img className="react-logo" src={logo} alt="react logo" />
+        <img className="react-logo" src={logo} alt="react-logo" />
       </a>
       <h2 style={{fontFamily: "Montserrat", color: "purple", marginTop: "14px"}}>
         API
-      </h2>
+      </h2>    
     </header>
   )
 }

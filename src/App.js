@@ -3,6 +3,7 @@ import axios from 'axios'
 import Header from './components/Header'
 import SearchBar from './components/SearchBar'
 import Results from './components/Results'
+import Popup from './components/Popup'
 
 
 function App() {
@@ -22,9 +23,9 @@ function App() {
           return { ...prevState, results: results}
         })
       })
-    }  
+    } 
   }
- 
+  
   const handleInput = e => {
     let search = e.target.value
  
@@ -33,12 +34,31 @@ function App() {
     })
   }
 
+  const openPopup = id => {
+    axios(apiurl + "&i=" + id).then(({ data }) => {
+      let result = data
+      setState(prevState => {
+        return { ...prevState, selected: result}
+      })
+    })
+  }
+   
+  const closePopup = () => {
+    setState(prevState => {
+      return { ...prevState, selected: {} }
+    })
+  }
+  
   return (
     <div className="App">
       <Header />
       <main>
         <SearchBar handleInput={handleInput} search={search} />
-        <Results results={state.results} />
+        <Results results={state.results} openPopup={openPopup} />
+        
+        {(typeof state.selected.Title != "undefined") ? 
+          <Popup selected={state.selected} closePopup={closePopup} /> : false
+        }
       </main>
     </div>
   )

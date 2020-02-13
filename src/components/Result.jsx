@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Result({ result }) {
+export default function Result({ result, openPopup }) {
   return (
-    <div className="result">
-      <img src={result.Poster} />
+    <div className="result" onClick={() => openPopup(result.imdbID)}>
+      <img src={result.Poster} alt="unavailable" />
       <h3>{result.Title}</h3>
     </div>
   )
